@@ -16,25 +16,25 @@ const Home: NextPage = () => {
         useEffect(() => {
             checkIfWalletIsConnected()
         }, [])
-
-        return (
-            <div className='mainContainer'>
-                <div className='dataContainer'>
-                    <div className='header'>
-                    👋🏽 Hey There!
-                    </div>
-
-                    <div className='bio'>
-                        I am raghav and I work on event technology! Connect your Ethereum wallent and wave at me!
-                    </div>
-
-                    <button className='waveButton' onClick={null}>
-                        Wave at Me
-                    </button>
-                </div>
-            </div>
-        )
     }
+
+    return (
+        <div className='mainContainer'>
+            <div className='dataContainer'>
+                <div className='header'>
+                👋🏽 Hey There!
+                </div>
+
+                <div className='bio'>
+                    I am raghav and I work on event technology! Connect your Ethereum wallent and wave at me!
+                </div>
+
+                <button className='waveButton' onClick={null}>
+                    Wave at Me
+                </button>
+            </div>
+        </div>
+    )
 }
 
 export default Home
