@@ -12,24 +12,18 @@ const Home: NextPage = () => {
         } else {
             console.log('We have the ethereum object ', ethereum)
         }
-
-        useEffect(() => {
-            checkIfWalletIsConnected()
-        }, [])
     }
 
+    useEffect(() => {
+        checkIfWalletIsConnected()
+    }, [])
+
     return (
-        <div className='mainContainer'>
-            <div className='dataContainer'>
-                <div className='header'>
+        <div className='container mx-auto'>
+            <div className='container mx-auto'>
                 👋🏽 Hey There!
-                </div>
-
-                <div className='bio'>
-                    I am raghav and I work on event technology! Connect your Ethereum wallent and wave at me!
-                </div>
-
-                <button className='waveButton' onClick={null}>
+                 I am raghav and I work on event technology! Connect your Ethereum wallent and wave at me!
+                <button>
                     Wave at Me
                 </button>
             </div>
