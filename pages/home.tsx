@@ -1,14 +1,24 @@
 import type { NextPage } from 'next'
 import React, { useEffect, useState } from 'react'
 import { ethers } from 'ethers'
+import abi from '../utils/WavePortal.json'
 
+declare global {
+  interface Window {
+    ethereum:any
+  }
+}
 
 const Home: NextPage = () => {
   const [currentAccount, setCurrentAccount] = useState('')
 
+  const contractAddress = "0x99722fa618c632bF6fb40e25C42d70B2D7ee7f6E"
+
+  const contractABI = abi.abi
+
   const checkIfWalletIsConnected = async () => {
     try {
-      const { ethereum } = window as any
+      const { ethereum } = window
 
       if (!ethereum) {
         console.log('Make sure you have metamask!')
@@ -49,6 +59,35 @@ const Home: NextPage = () => {
     }
   }
 
+  const wave = async () => {
+    try {
+      const { ethereum } = window as any
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const signer = provider.getSigner()
+        const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer)
+
+        let count = await wavePortalContract.getTotalWaves()
+        console.log("Retrieved total wave count...", count.toNumber())
+
+        const waveTransaction = await wavePortalContract.wave()
+        console.log("Mining... ", waveTransaction.hash)
+
+        await waveTransaction.wait()
+        console.log("Mined -- ", waveTransaction.hash)
+
+        count = await wavePortalContract.getTotalWaves()
+        console.log("Retreived total wave count...", count.toNumber())
+
+      } else {
+        console.log("Etherum object doesn't exist!")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     checkIfWalletIsConnected()
   }, [])
@@ -57,7 +96,7 @@ const Home: NextPage = () => {
     <div className="container mx-auto">
       👋🏽 Hey There! I am raghav and I work on event technology! Connect your
       Ethereum wallent and wave at me!
-      <button>Wave at Me</button>
+      <button onClick={wave}>Wave at Me</button>
 
       {!currentAccount && (
           <button className="waveButton" onClick={connectWallet}>
